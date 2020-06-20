@@ -1,5 +1,5 @@
 ## Gated Channel Transformation for Visual Recognition (GCT)
-The tensorflow implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020).
+The tensorflow (1.x) implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020).
 
 The code is based on [tf_cnn_benchmarks](https://github.com/awslabs/deeplearning-benchmark/tree/master/tensorflow_benchmark/tf_cnn_benchmarks). For applying GCT, we modify only the code in [convenet_builder.py](https://github.com/z-x-yang/GCT/blob/db5c5d2feef10becc2203517b46160a07c0161f7/convnet_builder.py#L147).
 
