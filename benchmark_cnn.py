@@ -2624,16 +2624,16 @@ class BenchmarkCNN(object):
           rel_device_num, abs_device_num)
       l2_loss = None
       total_loss = base_loss
-      adaption_vnum = 0
+      gct_num = 0
       new_params = []
       for p in params:
-        if 'adaption' in p.name:
-          adaption_vnum += 1
-          if not ('theta' in p.name or 'beta' in p.name):
+        if 'GCT' in p.name:
+          gct_num += 1
+          if not ('beta' in p.name):
             new_params.append(p)
         else:
           new_params.append(p)
-      print('adaption_vnum(wd):', adaption_vnum)
+      print('gct_num(wd):', gct_num)
 
 
       with tf.name_scope('l2_loss'):
