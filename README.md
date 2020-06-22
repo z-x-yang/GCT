@@ -15,7 +15,7 @@ To eval, run
 ```
 bash eval_gct_resnet50.sh
 ```
-After evaluation, the top-1 accuracy should be about 77.5%. If you remove the WD on the gating bias of GCT, the performance should be about 77.3% as the result in our paper.
+After evaluation, the top-1 accuracy should be about 77.5%. If you remove the WD on the gating bias of GCT (the default setting in our paper), the performance should be about 77.3%, which is same as the result in our paper.
 
 To train on other backbones, such as ResNet101 or Inception, you can change the model name in the above example scripts.
 
