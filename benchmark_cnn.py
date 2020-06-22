@@ -777,12 +777,12 @@ def get_perf_timing(batch_size, step_train_times, scale=1):
 def load_checkpoint(saver, sess, ckpt_dir):
   ckpt = tf.train.get_checkpoint_state(ckpt_dir)
   if ckpt and ckpt.model_checkpoint_path:
-    if os.path.isabs(ckpt.model_checkpoint_path):
+    # if os.path.isabs(ckpt.model_checkpoint_path):
       # Restores from checkpoint with absolute path.
-      model_checkpoint_path = ckpt.model_checkpoint_path
-    else:
+    model_checkpoint_path = ckpt.model_checkpoint_path
+    # else:
       # Restores from checkpoint with relative path.
-      model_checkpoint_path = os.path.join(ckpt_dir, ckpt.model_checkpoint_path)
+      # model_checkpoint_path = os.path.join(ckpt_dir, ckpt.model_checkpoint_path)
     # Assuming model_checkpoint_path looks something like:
     #   /my-favorite-path/imagenet_train/model.ckpt-0,
     # extract global_step from it.
@@ -2629,8 +2629,9 @@ class BenchmarkCNN(object):
       for p in params:
         if 'GCT' in p.name:
           gct_num += 1
-          if not ('beta' in p.name):
-            new_params.append(p)
+          # not apply wd on beta
+          # if not ('beta' in p.name):
+            # new_params.append(p)
         else:
           new_params.append(p)
       print('gct_num(wd):', gct_num)
