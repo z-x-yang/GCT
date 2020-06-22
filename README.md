@@ -6,7 +6,7 @@ The code is based on [tf_cnn_benchmarks](https://github.com/tensorflow/benchmark
 ## Getting Started
 First, please install TensorFlow 1.10. And then, please follow the [instruction](https://github.com/tensorflow/models/tree/master/research/inception#getting-started) in [tf_cnn_benchmarks](https://github.com/awslabs/deeplearning-benchmark/tree/master/tensorflow_benchmark/tf_cnn_benchmarks) to prepare the Imagenet data in TFRecord format.
 
-To train GCT-ResNet50 following the same setting in our paper, run
+To train GCT-ResNet50, run
 ```
 bash train_gct_resnet50.sh
 ```
