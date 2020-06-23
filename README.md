@@ -1,5 +1,5 @@
 ## Gated Channel Transformation for Visual Recognition (GCT)
-The TensorFlow (1.10) implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020) [[paper](https://www.google.com/search?q=gated+channel+transformation+for+visual+recognition&oq=Gated+Channel+Transformation+for+Visual+Recognition&aqs=chrome.0.35i39j69i60j69i61j69i60.330j0j7&sourceid=chrome&ie=UTF-8)].
+The TensorFlow (1.10) implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020) [[paper](http://openaccess.thecvf.com/content_CVPR_2020/papers/Yang_Gated_Channel_Transformation_for_Visual_Recognition_CVPR_2020_paper.pdf)].
 
 The code is based on [tf_cnn_benchmarks](https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks). For applying GCT before each convolutional layer, we modify the code in [convenet_builder.py](https://github.com/z-x-yang/GCT/blob/db5c5d2feef10becc2203517b46160a07c0161f7/convnet_builder.py#L147). To avoid applying weight decay (WD) on the gating bias of GCT as our default setting, you can modify the code in [benchmark_cnn.py](https://github.com/z-x-yang/GCT/blob/a85ba38539b7f26c96bae5e053a2b23b8c369e53/benchmark_cnn.py#L2627). In this version of GCT, we keep applying WD on the gating bias, which leads to a better GCT performance.
 
