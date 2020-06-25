@@ -2631,10 +2631,10 @@ class BenchmarkCNN(object):
           gct_num += 1
           # not apply wd on beta
           # if not ('beta' in p.name):
-            # new_params.append(p)
+          new_params.append(p)
         else:
           new_params.append(p)
-      print('gct_num(wd):', gct_num)
+      print('GCT num:', int(gct_num / 3))
 
 
       with tf.name_scope('l2_loss'):
