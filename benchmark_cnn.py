@@ -2626,12 +2626,15 @@ class BenchmarkCNN(object):
       total_loss = base_loss
       gct_num = 0
       new_params = []
+      is_beta_wd = True  # whether apply WD on beta or not
       for p in params:
         if 'GCT' in p.name:
           gct_num += 1
-          # not apply wd on beta
-          # if not ('beta' in p.name):
-          new_params.append(p)
+          if is_beta_wd:
+            new_params.append(p)
+          else:
+            if 'beta' not in p.name:
+              new_params.append(p)
         else:
           new_params.append(p)
       print('GCT num:', int(gct_num / 3))
