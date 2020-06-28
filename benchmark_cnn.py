@@ -2626,7 +2626,7 @@ class BenchmarkCNN(object):
       total_loss = base_loss
       gct_num = 0
       new_params = []
-      is_beta_wd = True  # whether apply WD on beta or not
+      is_beta_wd = False  # whether apply WD on beta or not
       for p in params:
         if 'GCT' in p.name:
           gct_num += 1
