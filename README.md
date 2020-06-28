@@ -11,7 +11,7 @@ To train GCT-ResNet50, run
 bash train_gct_resnet50.sh
 ```
 
-To eval, run
+To eval the last checkpoint, run
 ```
 bash eval_gct_resnet50.sh
 ```
