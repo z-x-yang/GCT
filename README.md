@@ -15,7 +15,7 @@ To eval the last checkpoint, run
 ```
 bash eval_gct_resnet50.sh
 ```
-After evaluation, the top-1 accuracy should be about 77.3%, which is same as the result in our paper. If you apply the WD on the gating bias of GCT, the performance should be better, about 77.5%. Without GCT, the top-1 accurracy of ResNet50 should be around 76.2%.
+After evaluation, the top-1 accuracy should be about 77.3%, which is same as the result in our paper. If you apply WD on the gating bias of GCT, the performance should be better, about 77.5%. Without GCT, the top-1 accurracy of ResNet50 should be around 76.2%.
 
 To train on other backbones, such as ResNet101 or Inception, you can change the model name in the above example scripts. All the names of availbale backbones can be found in [here](https://github.com/z-x-yang/GCT/blob/59bba462bb2b9dd14425333625a2e59d6a5eb57d/models/model_config.py#L33).
 
