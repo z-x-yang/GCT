@@ -48,33 +48,16 @@ class Inceptionv3Model(model.CNNModel):
 
   def __init__(self, auxiliary=False):
     self._auxiliary = auxiliary
-    super(Inceptionv3Model, self).__init__('inception3', 224, 256, 0.1)
+    super(Inceptionv3Model, self).__init__('inception3', 224, 256, 0.025)
 
   def add_inference(self, cnn):
-    def se(cnn):
-      '''
-      cn = cnn.top_size
-      now = cnn.top_layer
-      se = cnn.spatial_mean()
-      se = cnn.affine(cn / 16)
-      se = cnn.affine(cn, activation=None)
-      se = tf.sigmoid(se)
-      if cnn.data_format == 'NCHW':
-        se = tf.reshape(se, [-1, cn, 1, 1])
-      else:
-        se = tf.reshape(se, [-1, 1, 1, cn])
-      now = now * se
-      cnn.top_layer = now
-      cnn.top_size = cn
-      '''
-      a = 1
 
     def inception_v3_a(cnn, n):
       cols = [[('conv', 64, 1, 1)], [('conv', 48, 1, 1), ('conv', 64, 5, 5)],
               [('conv', 64, 1, 1), ('conv', 96, 3, 3), ('conv', 96, 3, 3)],
               [('apool', 3, 3, 1, 1, 'SAME'), ('conv', n, 1, 1)]]
       cnn.inception_module('incept_v3_a', cols)
-      se(cnn)
+
 
     def inception_v3_b(cnn):
       cols = [[('conv', 384, 3, 3, 2, 2, 'VALID')],
@@ -83,7 +66,7 @@ class Inceptionv3Model(model.CNNModel):
                ('conv', 96, 3, 3, 2, 2, 'VALID')],
               [('mpool', 3, 3, 2, 2, 'VALID')]]
       cnn.inception_module('incept_v3_b', cols)
-      se(cnn)
+
 
     def inception_v3_c(cnn, n):
       cols = [[('conv', 192, 1, 1)],
@@ -92,7 +75,7 @@ class Inceptionv3Model(model.CNNModel):
                ('conv', n, 7, 1), ('conv', 192, 1, 7)],
               [('apool', 3, 3, 1, 1, 'SAME'), ('conv', 192, 1, 1)]]
       cnn.inception_module('incept_v3_c', cols)
-      se(cnn)
+
 
     def inception_v3_d(cnn):
       cols = [[('conv', 192, 1, 1), ('conv', 320, 3, 3, 2, 2, 'VALID')],
@@ -100,7 +83,7 @@ class Inceptionv3Model(model.CNNModel):
                ('conv', 192, 3, 3, 2, 2, 'VALID')],
               [('mpool', 3, 3, 2, 2, 'VALID')]]
       cnn.inception_module('incept_v3_d', cols)
-      se(cnn)
+
 
     def inception_v3_e(cnn, pooltype):
       cols = [[('conv', 320, 1, 1)], [('conv', 384, 1, 1), ('conv', 384, 1, 3)],
@@ -110,7 +93,7 @@ class Inceptionv3Model(model.CNNModel):
               [('mpool' if pooltype == 'max' else 'apool', 3, 3, 1, 1, 'SAME'),
                ('conv', 192, 1, 1)]]
       cnn.inception_module('incept_v3_e', cols)
-      se(cnn)
+
 
     def incept_v3_aux(cnn):
       assert cnn.aux_top_layer is None
@@ -121,7 +104,7 @@ class Inceptionv3Model(model.CNNModel):
         cnn.conv(128, 1, 1, mode='SAME')
         cnn.conv(768, 5, 5, mode='VALID', stddev=0.01)
         cnn.reshape([-1, 768])
-        se(cnn)
+
 
     cnn.use_batch_norm = True
     cnn.batch_norm_config = {'decay': 0.9, 'epsilon': 1e-5, 'scale': True}
@@ -154,6 +137,7 @@ class Inceptionv3Model(model.CNNModel):
     boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 90, 100]]
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
+    print('Init LR: ', rescaled_lr)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]

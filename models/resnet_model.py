@@ -263,7 +263,7 @@ class ResnetModel(model_lib.CNNModel):
         'resnet152_v2': 32,
     }
     batch_size = 256
-    super(ResnetModel, self).__init__(model, 224, batch_size, 0.1,
+    super(ResnetModel, self).__init__(model, 224, batch_size, 0.025,
                                       layer_counts)
     if 'v2' in model:
       self.version = 'v2'
@@ -301,6 +301,7 @@ class ResnetModel(model_lib.CNNModel):
     boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 90, 100]]
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
+    print('Init LR: ', rescaled_lr)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]

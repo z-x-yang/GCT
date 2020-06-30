@@ -30,23 +30,6 @@ from models import model
 import datasets
 
 
-def se(cnn):
-  '''
-  cn = cnn.top_size
-  now = cnn.top_layer
-  se = cnn.spatial_mean()
-  se = cnn.affine(cn / 16)
-  se = cnn.affine(cn, activation=None)
-  se = tf.sigmoid(se)
-  if cnn.data_format == 'NCHW':
-    se = tf.reshape(se, [-1, cn, 1, 1])
-  else:
-    se = tf.reshape(se, [-1, 1, 1, cn])
-  now = now * se
-  cnn.top_layer = now
-  cnn.top_size = cn
-  '''
-  a = 1
 
 
 def _construct_vgg(cnn, num_conv_layers):
@@ -54,23 +37,23 @@ def _construct_vgg(cnn, num_conv_layers):
   assert len(num_conv_layers) == 5
   for _ in xrange(num_conv_layers[0]):
     cnn.conv(64, 3, 3, use_batch_norm=True, bias=None)
-    se(cnn)
+
   cnn.mpool(2, 2)
   for _ in xrange(num_conv_layers[1]):
     cnn.conv(128, 3, 3, use_batch_norm=True, bias=None)
-    se(cnn)
+
   cnn.mpool(2, 2)
   for _ in xrange(num_conv_layers[2]):
     cnn.conv(256, 3, 3, use_batch_norm=True, bias=None)
-    se(cnn)
+
   cnn.mpool(2, 2)
   for _ in xrange(num_conv_layers[3]):
     cnn.conv(512, 3, 3, use_batch_norm=True, bias=None)
-    se(cnn)
+
   cnn.mpool(2, 2)
   for _ in xrange(num_conv_layers[4]):
     cnn.conv(512, 3, 3, use_batch_norm=True, bias=None)
-    se(cnn)
+
   cnn.mpool(2, 2)
   cnn.reshape([-1, 512 * 7 * 7])
   cnn.affine(4096)
@@ -91,7 +74,7 @@ class Vgg11Model(model.CNNModel):
 class Vgg16Model(model.CNNModel):
 
   def __init__(self):
-    super(Vgg16Model, self).__init__('vgg16', 224, 256, 0.1)
+    super(Vgg16Model, self).__init__('vgg16', 224, 256, 0.025)
 
   def add_inference(self, cnn):
     cnn.use_batch_norm = True
@@ -104,6 +87,7 @@ class Vgg16Model(model.CNNModel):
     boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 90, 100]]
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
+    print('Init LR: ', rescaled_lr)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]
