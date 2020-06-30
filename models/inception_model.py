@@ -48,7 +48,7 @@ class Inceptionv3Model(model.CNNModel):
 
   def __init__(self, auxiliary=False):
     self._auxiliary = auxiliary
-    super(Inceptionv3Model, self).__init__('inception3', 224, 64, 0.004)
+    super(Inceptionv3Model, self).__init__('inception3', 224, 256, 0.1)
 
   def add_inference(self, cnn):
     def se(cnn):
@@ -151,15 +151,18 @@ class Inceptionv3Model(model.CNNModel):
   def get_learning_rate(self, global_step, batch_size):
     num_batches_per_epoch = (
         float(datasets.IMAGENET_NUM_TRAIN_IMAGES) / batch_size)
-    boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 80, 90]]
+    boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 90, 100]]
+
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
+    print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]
     lr = tf.train.piecewise_constant(global_step, boundaries, values)
-    warmup_steps = int(num_batches_per_epoch * 5)
-    warmup_lr = (
-        rescaled_lr * tf.cast(global_step, tf.float32) / tf.cast(
-            warmup_steps, tf.float32))
+
+    warmup_steps = int(num_batches_per_epoch)
+
+    warmup_lr = lr * 0.1
+
     return tf.cond(global_step < warmup_steps, lambda: warmup_lr, lambda: lr)
 
 

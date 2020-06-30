@@ -102,19 +102,17 @@ class Vgg16Model(model.CNNModel):
     num_batches_per_epoch = (
         float(datasets.IMAGENET_NUM_TRAIN_IMAGES) / batch_size)
     boundaries = [int(num_batches_per_epoch * x) for x in [30, 60, 90, 100]]
-    num_gpu = 4
-    rescaled_lr = self.learning_rate / num_gpu / self.default_batch_size * batch_size
+
+    rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
+    print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]
     lr = tf.train.piecewise_constant(global_step, boundaries, values)
+
     warmup_steps = int(num_batches_per_epoch)
-    # warmup_steps = 0
-    '''
-    warmup_lr = (
-        rescaled_lr * tf.cast(global_step, tf.float32) / tf.cast(
-            warmup_steps, tf.float32))
-    '''
+
     warmup_lr = lr * 0.1
+
     return tf.cond(global_step < warmup_steps, lambda: warmup_lr, lambda: lr)
 
 
