@@ -263,7 +263,7 @@ class ResnetModel(model_lib.CNNModel):
         'resnet152_v2': 32,
     }
     batch_size = 256
-    super(ResnetModel, self).__init__(model, 224, batch_size, 0.025,
+    super(ResnetModel, self).__init__(model, 224, batch_size, 0.1,
                                       layer_counts)
     if 'v2' in model:
       self.version = 'v2'
@@ -302,6 +302,8 @@ class ResnetModel(model_lib.CNNModel):
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
     print('Init LR: ', rescaled_lr)
+    rescaled_lr = rescaled_lr / (batch_size / self.batch_size)
+    print('GPU Num: ', batch_size / self.batch_size)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]

@@ -48,7 +48,7 @@ class Inceptionv3Model(model.CNNModel):
 
   def __init__(self, auxiliary=False):
     self._auxiliary = auxiliary
-    super(Inceptionv3Model, self).__init__('inception3', 224, 256, 0.025)
+    super(Inceptionv3Model, self).__init__('inception3', 224, 256, 0.1)
 
   def add_inference(self, cnn):
 
@@ -138,6 +138,8 @@ class Inceptionv3Model(model.CNNModel):
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
     print('Init LR: ', rescaled_lr)
+    rescaled_lr = rescaled_lr / (batch_size / self.batch_size)
+    print('GPU Num: ', batch_size / self.batch_size)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]

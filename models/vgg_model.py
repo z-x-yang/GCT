@@ -74,7 +74,7 @@ class Vgg11Model(model.CNNModel):
 class Vgg16Model(model.CNNModel):
 
   def __init__(self):
-    super(Vgg16Model, self).__init__('vgg16', 224, 256, 0.025)
+    super(Vgg16Model, self).__init__('vgg16', 224, 256, 0.1)
 
   def add_inference(self, cnn):
     cnn.use_batch_norm = True
@@ -88,6 +88,8 @@ class Vgg16Model(model.CNNModel):
 
     rescaled_lr = self.learning_rate / self.default_batch_size * batch_size
     print('Init LR: ', rescaled_lr)
+    rescaled_lr = rescaled_lr / (batch_size / self.batch_size)
+    print('GPU Num: ', batch_size / self.batch_size)
     print('Batch size: ', batch_size)
     values = [1, 0.1, 0.01, 0.001, 0.0001]
     values = [rescaled_lr * v for v in values]
