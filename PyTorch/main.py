@@ -270,7 +270,7 @@ def main_worker(gpu, ngpus_per_node, args):
         if not args.multiprocessing_distributed or (args.multiprocessing_distributed
                                                     and args.rank % ngpus_per_node == 0):
             with open('./acc_log.txt', 'a') as f:
-                f.write('Epoch {}: {}'.format(epoch, acc1))
+                f.write('Epoch {}: {}\n'.format(epoch, acc1))
                 
             save_checkpoint({
                 'epoch': epoch + 1,
