@@ -182,7 +182,7 @@ def main_worker(gpu, ngpus_per_node, args):
         weight_decay = args.weight_decay
 
         if "beta" in key:
-            # weight_decay = 0
+            weight_decay = 0
             num_GCT += 1
 
         params += [{"params": [value], "lr": lr, "weight_decay": weight_decay}]
