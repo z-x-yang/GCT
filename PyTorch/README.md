@@ -12,6 +12,7 @@ bash run.sh
 ```
 After finished, the best accuracy should be around 77.2%, which is slightly lower than our TensorFlow version. The reason for the lower performance is that the augmentation method in this simple PyTorch version is a little bit different from the TensorFlow version.
 
+## Pretrain Model
 We also prepared a pretrain model of GCT-ResNet50 (top-1 acc: 77.2%), which can be downloaded from [here](https://drive.google.com/file/d/1y5a56UzBjUWlWwlrU42lxueJY_cBpWLL/view?usp=sharing).
 
 ## Citation
