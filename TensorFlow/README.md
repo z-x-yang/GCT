@@ -31,7 +31,7 @@ To train on other backbones, such as ResNet101 or Inception, you can change the 
 ## Performance
 The accuracy (top-1/top-5 %) should be close to the results below, when using 4 GPUs.
 
-| Backbone  | Original | +GCT (in the paper) | +GCT (this version) |
+| Backbone  | Original | +GCT (no WD on beta) | +GCT (WD on beta) |
 | --------- | -------- | ------------------- | ------------------- |
 | VGG-16 | 73.8/91.7 | 74.9/**92.5** | **75.0**/92.4 |
 | Inception-V3 | 75.7/92.7 | **76.3**/**92.9** | 76.2/**92.9** |
