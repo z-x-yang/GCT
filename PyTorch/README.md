@@ -10,6 +10,7 @@ To train and evaluate GCT-ResNet50, run
 ```
 bash run.sh
 ```
+After finished, the best accuracy should be around 77.2%, which is slightly lower than our TensorFlow version. The reason of the lower performance is that the augmentation method in this simple PyTorch version is a little bit different from the TensorFlow version.
 
 ## Citation
 ```
