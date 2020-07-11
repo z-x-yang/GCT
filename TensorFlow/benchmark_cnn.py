@@ -268,6 +268,8 @@ flags.DEFINE_float('gradient_clip', None,
                    'Gradient clipping magnitude. Disabled by default.')
 flags.DEFINE_float('weight_decay', 0.00004,
                    'Weight decay factor for training.')
+flags.DEFINE_boolean('weight_decay_on_beta', True,
+                   'Whether apply weight decay on the beta parameters of GCT layers.')
 flags.DEFINE_float('gpu_memory_frac_for_testing', 0,
                    'If non-zero, the fraction of GPU memory that will be used. '
                    'Useful for testing the benchmark script, as this allows '
@@ -989,6 +991,7 @@ def get_learning_rate(params, global_step, num_examples_per_epoch, model,
                                      params.minimum_learning_rate)
     else:
       learning_rate = model.get_learning_rate(global_step, batch_size)
+
     if params.num_learning_rate_warmup_epochs > 0 and (
         params.init_learning_rate or params.piecewise_learning_rate_schedule):
       warmup_steps = int(num_batches_per_epoch *
@@ -1159,6 +1162,7 @@ class BenchmarkCNN(object):
     # number of GPUs.
     if self.params.batch_size > 0:
       self.model.set_batch_size(self.params.batch_size)
+
     self.batch_size = self.model.get_batch_size() * self.num_gpus
     self.batch_group_size = self.params.batch_group_size
     self.enable_auto_loss_scale = (
@@ -2624,12 +2628,19 @@ class BenchmarkCNN(object):
           rel_device_num, abs_device_num)
       l2_loss = None
       total_loss = base_loss
-      gct_num = 0
+      gct_param_num = 0
       new_params = []
-      is_beta_wd = True  # whether apply WD on beta or not
+      
+      is_beta_wd = self.params.weight_decay_on_beta  # whether apply WD on beta or not
+
+      if is_beta_wd:
+        print("Apply WD on beta.")
+      else:
+        print("No WD on beta.")
+
       for p in params:
         if 'GCT' in p.name:
-          gct_num += 1
+          gct_param_num += 1
           if is_beta_wd:
             new_params.append(p)
           else:
@@ -2637,7 +2648,8 @@ class BenchmarkCNN(object):
               new_params.append(p)
         else:
           new_params.append(p)
-      print('GCT num:', int(gct_num / 3))
+
+      print('GCT num:', int(gct_param_num / 3))
 
 
       with tf.name_scope('l2_loss'):
