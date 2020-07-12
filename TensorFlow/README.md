@@ -1,9 +1,17 @@
 ## Gated Channel Transformation for Visual Recognition (GCT)
-The TensorFlow (1.10) implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020) [[paper](http://openaccess.thecvf.com/content_CVPR_2020/papers/Yang_Gated_Channel_Transformation_for_Visual_Recognition_CVPR_2020_paper.pdf)].
+The TensorFlow implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020) [[paper](http://openaccess.thecvf.com/content_CVPR_2020/papers/Yang_Gated_Channel_Transformation_for_Visual_Recognition_CVPR_2020_paper.pdf)].
 
-The code is based on [tf_cnn_benchmarks](https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks). 
+The code is based on [tf_cnn_benchmarks](https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks) (TF 1.10). The code can be obtained via:
+```
+git clone https://github.com/tensorflow/benchmarks
+```
+Our GCT can be readily applied to [TF 2.0](https://github.com/tensorflow/models/tree/master/official/vision/image_classification) as well, but we take `tf_cnn_benchmarks` as an example here.
+We made two changes on `tf_cnn_benchmarks`.
 
-For applying GCT before each convolutional layer, we modify the code in [convenet_builder.py](https://github.com/z-x-yang/GCT/blob/db5c5d2feef10becc2203517b46160a07c0161f7/convnet_builder.py#L147). 
+
+1. We applied [GCT](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L123) before each convolutional layer. The definition of GCT can be found [here](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L147-L211).
+
+2. We added a new argument [weight_decay_on_beta](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/benchmark_cnn.py#L271-L272). When `weight_decay_on_beta` is `True`, weight decay (WD) is applied on the gating bias of GCT.
 
 ## Getting Started
 First, please install TensorFlow 1.10. And then, please follow the [instruction](https://github.com/tensorflow/models/tree/master/research/inception#getting-started) in [tf_cnn_benchmarks](https://github.com/awslabs/deeplearning-benchmark/tree/master/tensorflow_benchmark/tf_cnn_benchmarks) to prepare the Imagenet data in TFRecord format.
