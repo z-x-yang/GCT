@@ -9,7 +9,7 @@ Our GCT can be readily applied to [TF 2.0](https://github.com/tensorflow/models/
 We made two changes on `tf_cnn_benchmarks`.
 
 
-1. We applied [GCT](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L123) before each convolutional layer. The definition of GCT can be found [here](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L147-L211).
+1. We applied [GCT](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L123) before every convolutional layer. The definition of GCT can be found [here](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/convnet_builder.py#L147-L211). This TensorFlow version will automatically apply GCT before every convolutional layer.
 
 2. We added a new argument [weight_decay_on_beta](https://github.com/z-x-yang/GCT/blob/master/TensorFlow/benchmark_cnn.py#L271-L272). When `weight_decay_on_beta` is `True`, weight decay (WD) is applied on the gating bias of GCT.
 
