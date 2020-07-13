@@ -21,6 +21,15 @@ Second, you need to remove the weight decay on the beta parameters of GCT, follo
 
 After running Mask-RCNN & ResNet-50 in its default training schedule ([here](https://github.com/facebookresearch/maskrcnn-benchmark/blob/master/configs/e2e_mask_rcnn_R_50_FPN_1x.yaml)) on COCO, the preformance should be around 39.8 (box AP) and 36.0 (mask AP), while the baseline without GCT should be 37.8 (box AP) and 34.2 (mask AP).
 
+More results based on Mask-RCNN are below:
+| Backbone  | box AP | mask AP |
+| --------- | -------- | ------------------- |
+| ResNet-50 | 37.8 | 34.2 |
+| GCN-ResNet-50 | **39.8** | **36.0** |
+| ResNet-101 | 40.1 | 36.1 |
+| GCN-ResNet-101 | **42.0** | **37.7** |
+
+
 ## Pretrain Model
 We also prepared a pretrain model of GCT-ResNet50 (top-1 acc: 77.2%), which can be downloaded from [here](https://drive.google.com/file/d/1y5a56UzBjUWlWwlrU42lxueJY_cBpWLL/view?usp=sharing).
 
