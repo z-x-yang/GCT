@@ -25,9 +25,9 @@ More results based on Mask-RCNN are below:
 | Backbone  | box AP | mask AP |
 | --------- | -------- | ------------------- |
 | ResNet-50 | 37.8 | 34.2 |
-| GCN-ResNet-50 | **39.8** | **36.0** |
+| GCT-ResNet-50 | **39.8** | **36.0** |
 | ResNet-101 | 40.1 | 36.1 |
-| GCN-ResNet-101 | **42.0** | **37.7** |
+| GCT-ResNet-101 | **42.0** | **37.7** |
 
 
 ## Pretrain Model
