@@ -1,6 +1,8 @@
 ## Gated Channel Transformation for Visual Recognition (GCT)
 The TensorFlow (1.10) and PyTorch implementation of Gated Channel Transformation for Visual Recognition (CVPR 2020) [[paper](http://openaccess.thecvf.com/content_CVPR_2020/papers/Yang_Gated_Channel_Transformation_for_Visual_Recognition_CVPR_2020_paper.pdf)].
 
+<img src="https://github.com/z-x-yang/GCT/raw/master/overview.png" width="80%"/>
+
 The TensorFlow implementation supports the backbones of ResNet-50/101/152, VGG-16 and Inception-V3. For PyTorch implementation, we give an example of GCT-ResNet-50. 
 
 ## Apply GCT in Your Network
